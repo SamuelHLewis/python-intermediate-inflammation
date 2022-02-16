@@ -24,11 +24,11 @@ jobs:
         python-version: 3.9
 
     - name: Install Python dependencies
-    - run: |
+      run: |
         python3 -m pip install --upgrade pip
         pip3 install -r requirements.txt
         pip3 install -e .
 
     - name: Test with PyTest
-    - run: |
+      run: |
         pytest --cov=inflammation.models tests/test_models.py
