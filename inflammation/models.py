@@ -63,6 +63,10 @@ def patient_normalise(data):
     """
     if np.any(data < 0):
         raise ValueError('Inflammation values should not be negative')
+    if not isinstance(data, np.ndarray):
+        raise TypeError('Input data should be a numpy ndarray')
+    if not len(data.shape) == 2:
+        raise ValueError('Input data should be 2 dimensional')
     max_data = np.nanmax(data, axis=1)
     with np.errstate(invalid='ignore', divide='ignore'):
         normalised = data / max_data[:, np.newaxis]

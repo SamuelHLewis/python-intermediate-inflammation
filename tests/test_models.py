@@ -48,44 +48,54 @@ def test_daily_min(test, expected):
     "test, expected, expect_raises",
     [
         (
+            np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),
+            np.array([[0.33, 0.67, 1], [0.67, 0.83, 1], [0.78, 0.89, 1]]),
+            None
+        ),
+        (
+            np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]]),
+            np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]]),
+            None
+        ),
+        (
+            np.array([[1, 1, 1], [1, 1, 1], [1, 1, 1]]),
+            np.array([[1, 1, 1], [1, 1, 1], [1, 1, 1]]),
+            None
+        ),
+        (
+            np.array([[1, 2, 3], [4, 5, 6], [7, 8, float('nan')]]),
+            np.array([[0.33, 0.67, 1], [0.67, 0.83, 1], [0.88, 1, 0]]),
+            None
+        ),
+        (
+            np.array([[float('nan'), float('nan')], [float('nan'), float('nan')], [float('nan'), float('nan')]]),
+            np.array([[0, 0], [0, 0], [0, 0]]),
+            None
+        ),
+        (
+            np.array([[-1, 2, 3], [4, 5, 6], [7, 8, 9]]),
+            np.array([[0, 0.67, 1], [0.67, 0.83, 1], [0.78, 0.89, 1]]),
+            ValueError
+        ),
+        (
             [[1, 2, 3], [4, 5, 6], [7, 8, 9]],
             [[0.33, 0.67, 1], [0.67, 0.83, 1], [0.78, 0.89, 1]],
-            None
+            TypeError
         ),
         (
-            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
-            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
-            None
-        ),
-        (
-            [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
-            [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
-            None
-        ),
-        (
-            [[1, 2, 3], [4, 5, 6], [7, 8, float('nan')]],
-            [[0.33, 0.67, 1], [0.67, 0.83, 1], [0.88, 1, 0]],
-            None
-        ),
-        (
-            [[float('nan'), float('nan')], [float('nan'), float('nan')], [float('nan'), float('nan')]],
-            [[0, 0], [0, 0], [0, 0]],
-            None
-        ),
-        (
-            [[-1, 2, 3], [4, 5, 6], [7, 8, 9]],
-            [[0, 0.67, 1], [0.67, 0.83, 1], [0.78, 0.89, 1]],
+            np.array([[[1, 2], [3, 4]], [[1, 2], [3, 4]]]),
+            np.array([[[0.5, 1], [0.75, 1]], [[0.5, 1], [0.75, 1]]]),
             ValueError
         )
     ],
-    ids=("Integers", "Zeroes", "Ones", "Some missing", "All missing", "Negatives")
+    ids=("Integers", "Zeroes", "Ones", "Some missing", "All missing", "Negatives", "List input", "3 dimensional")
 )
 def test_patient_normalise(test, expected, expect_raises):
-    """Test normalisation works for arrays of one and positive integers.
+    """Test normalisation works for range of conditions described above.
     Assumption that test accuracy of two decimal places is sufficient."""
     from inflammation.models import patient_normalise
     if expect_raises is not None:
         with pytest.raises(expect_raises):
-            npt.assert_almost_equal(patient_normalise(np.array(test)), np.array(expected), decimal=2)
+            npt.assert_almost_equal(patient_normalise(test), expected, decimal=2)
     else:
-        npt.assert_almost_equal(patient_normalise(np.array(test)), np.array(expected), decimal=2)
+        npt.assert_almost_equal(patient_normalise(test), expected, decimal=2)
