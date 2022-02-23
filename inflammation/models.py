@@ -114,9 +114,13 @@ class Doctor(Person):
     def __init__(self, name):
         super().__init__(name)
         self.patients = []
+        self.trials = []
 
     def __str__(self):
         return self.name
 
     def add_patient(self, patient):
         self.patients.append(patient)
+
+    def assign_to_trial(self, trial_name):
+        self.trials.append(trial_name)

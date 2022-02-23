@@ -28,3 +28,14 @@ def test_doctor_add_patient():
 
     d.add_patient(p)
     assert d.patients == [p]
+
+def test_doctor_assign_to_trial():
+    from inflammation.models import Doctor
+
+    name = 'Dr Nick'
+    trial = 'psoriasis101'
+
+    d = Doctor(name)
+    d.assign_to_trial(trial)
+
+    assert d.trials == [trial]
