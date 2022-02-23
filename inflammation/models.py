@@ -54,6 +54,15 @@ def daily_min(data):
     """
     return np.min(data, axis=0)
 
+
+def daily_sd(data):
+    """Calculate the standard deviation for each column of a 2D inflammation data array
+    :param data: a 2D data array with inflammation data
+                 (rows are patients, columns are days)
+    :returns: an array holding the sd value for each day
+    """
+    return np.std(data, axis=0)
+
 def patient_normalise(data):
     """Normalise patient data from a 2D inflammation data array.
 
@@ -73,6 +82,7 @@ def patient_normalise(data):
     normalised[np.isnan(normalised)] = 0
     normalised[normalised < 0] = 0
     return normalised
+
 
 class Observation:
     def __init__(self, day, value):
