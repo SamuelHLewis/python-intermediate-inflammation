@@ -7,5 +7,3 @@ class Book:
     def __str__(self):
         return self.title + ' by ' + self.author
 
-book1 = Book('Hitchhikers', 'D Adams')
-print(book1)
