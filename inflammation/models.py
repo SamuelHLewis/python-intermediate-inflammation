@@ -106,7 +106,7 @@ class Patient(Person):
             except IndexError:
                 day = 0
 
-        new_observation = Observation(day, value)
+        new_observation = Observation(value, day)
 
         self.observations.append(new_observation)
         return new_observation
