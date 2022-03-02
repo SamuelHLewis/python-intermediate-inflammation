@@ -2,6 +2,7 @@
 
 
 def test_create_patient():
+    """Test if Patient class creates Patient object correctly"""
     from inflammation.models import Patient
 
     name = 'Alice'
@@ -10,6 +11,7 @@ def test_create_patient():
     assert p.name == name
 
 def test_create_doctor():
+    """Test if Doctor class creates Doctor object correctly"""
     from inflammation.models import Doctor
 
     name = 'Dr Nick'
@@ -18,6 +20,7 @@ def test_create_doctor():
     assert str(d) == name
 
 def test_doctor_add_patient():
+    """Test if method add_patient() of Doctor class adds Patient object correctly"""
     from inflammation.models import Doctor, Patient
 
     d_name = 'Dr Nick'
@@ -30,6 +33,7 @@ def test_doctor_add_patient():
     assert d.patients == [p]
 
 def test_doctor_assign_to_trial():
+    """Test if method assign_to_trial() of Doctor class assigns trial_name to trial list correctly"""
     from inflammation.models import Doctor
 
     name = 'Dr Nick'

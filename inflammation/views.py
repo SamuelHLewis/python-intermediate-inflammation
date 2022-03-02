@@ -25,7 +25,10 @@ def visualize(data_dict):
     plt.show()
 
 def display_patient_record(patient):
-    """Display data for a single patient."""
+    """Display data for a single patient.
+
+    :param patient: object of class Patient -> data to print information about a patient
+    """
     print(patient.name)
     for obs in patient.observations:
         print(obs.day, obs.value)
