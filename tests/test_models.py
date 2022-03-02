@@ -45,6 +45,22 @@ def test_daily_min(test, expected):
     npt.assert_array_equal(daily_min(np.array(test)), np.array(expected))
 
 @pytest.mark.parametrize(
+    "test, expected",
+    [
+        ([[0,0],[0,0],[0,0]],[0,0]), # Trivial
+        ([[1,1],[1,1],[1,1]],[0,0]), # Constant columns have variance 0
+        ([[0,0],[1,5]], [0.5,2.5])
+    ],
+    ids = ('Zeroes','Constants','Knowns')
+)
+
+def test_daily_sd(test,expected):
+    from inflammation.models import daily_sd
+    npt.assert_array_equal(daily_sd(np.array(test)), np.array(expected))
+
+
+
+@pytest.mark.parametrize(
     "test, expected, expect_raises",
     [
         (
