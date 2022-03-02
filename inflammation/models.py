@@ -14,9 +14,10 @@ Functions:
 """
 
 import numpy as np
+from numpy import ndarray
 
 
-def load_csv(filename):
+def load_csv(filename: str) -> ndarray:
     """Load a Numpy array from a CSV.
 
     :param filename: Filename of CSV to load
@@ -25,7 +26,7 @@ def load_csv(filename):
     return np.loadtxt(fname=filename, delimiter=',')
 
 
-def daily_mean(data):
+def daily_mean(data: ndarray) -> ndarray:
     """Calculate the daily mean of a 2D inflammation data array.
     
     :param data: a 2D data array with inflammation data
@@ -35,7 +36,7 @@ def daily_mean(data):
     return np.mean(data, axis=0)
 
 
-def daily_max(data):
+def daily_max(data: ndarray) -> ndarray:
     """Calculate the daily max of a 2D inflammation data array.
     
     :param data: a 2D data array with inflammation data
@@ -45,7 +46,7 @@ def daily_max(data):
     return np.max(data, axis=0)
 
 
-def daily_min(data):
+def daily_min(data: ndarray) -> ndarray:
     """Calculate the daily min of a 2D inflammation data array.
     
     :param data: a 2D data array with inflammation data
@@ -55,7 +56,7 @@ def daily_min(data):
     return np.min(data, axis=0)
 
 
-def daily_sd(data):
+def daily_sd(data: ndarray) -> ndarray:
     """Calculate the standard deviation for each column of a 2D inflammation data array
     :param data: a 2D data array with inflammation data
                  (rows are patients, columns are days)
@@ -63,7 +64,7 @@ def daily_sd(data):
     """
     return np.std(data, axis=0)
 
-def patient_normalise(data):
+def patient_normalise(data: ndarray) -> ndarray:
     """Normalise patient data from a 2D inflammation data array.
 
     NaN values are ignored, and normalised to 0.
@@ -95,11 +96,11 @@ class Observation:
     :param day: day of measurement for a patient
     :param value: value of measurement for a patient
     """
-    def __init__(self, day, value):
+    def __init__(self, day: int, value: int) -> None:
         self.day = day
         self.value = value
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.value)
 
 class Person:
@@ -107,10 +108,10 @@ class Person:
 
     :param name: a name of the person
     """
-    def __init__(self, name):
+    def __init__(self, name) -> None:
         self.name = name
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
 class Patient(Person):
@@ -120,19 +121,19 @@ class Patient(Person):
                  (parameter inherited from class Person)
     :param observation: list of observation points for a given patient
     """
-    def __init__(self, name, observations=None):
+    def __init__(self, name: str, observations: Observation = None) -> None:
         super().__init__(name)
         self.observations = []
         if observations is not None:
             self.observations = observations
 
-    def add_observation(self, value, day=None):
+ 
+    def add_observation(self, value: int, day: int = None) -> Observation:
         """Add observation for a given patient
 
         :param value: value of measurement of a patient
         :param day: day of measurement of a patient
         """
-
         if day is None:
             try:
                 day = self.observations[-1].day + 1
@@ -154,7 +155,7 @@ class Doctor(Person):
                      that are assigned to a given doctor
     :param trials: list of trials that are assigned to a given doctor
     """
-    def __init__(self, name):
+    def __init__(self, name: str) -> None:
         super().__init__(name)
         self.patients = []
         self.trials = []
@@ -162,14 +163,14 @@ class Doctor(Person):
     def __str__(self):
         return self.name
 
-    def add_patient(self, patient):
+    def add_patient(self, patient: Patient) -> None:
         """Add patient object to a list of patients assigned to a given doctor
 
         :param patient: object of class Patient
         """
         self.patients.append(patient)
 
-    def assign_to_trial(self, trial_name):
+    def assign_to_trial(self, trial_name: str) -> None:
         """Assign a given doctor to a trial
 
         :param trial_name: string with trial name that will be
