@@ -22,3 +22,9 @@ The following optional packages are required to run Inflam's unit tests:
 - [pytest](https://docs.pytest.org/en/stable/) - Inflam's unit tests are written using pytest
 - [pytest-cov](https://pypi.org/project/pytest-cov/) - Adds test coverage stats to unit testing
 
+## Instructions
+In order to build the repo as a package, type the following command on the home directory of this repo:
+`pip install . -e` 
+
+## Conntact
+In case you identify a bug/misbehaviour of this software, please either create a new issue or contact leonidas.souliotis at astrazeneca.com
