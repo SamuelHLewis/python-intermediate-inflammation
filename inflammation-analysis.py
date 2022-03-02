@@ -8,7 +8,7 @@ import argparse
 from inflammation import models, views
 
 
-def main(args):
+def main(args: argparse.Namespace) -> None:
     """The MVC Controller of the patient inflammation data system.
 
     The Controller is responsible for:
@@ -63,5 +63,5 @@ if __name__ == "__main__":
         help='Which patient should be displayed?')
 
     args = parser.parse_args()
-
+    print(type(args))
     main(args)
