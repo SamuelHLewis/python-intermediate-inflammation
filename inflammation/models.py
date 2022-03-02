@@ -69,7 +69,12 @@ def patient_normalise(data: ndarray) -> ndarray:
 
     NaN values are ignored, and normalised to 0.
 
-    Negative values are rounded to 0.
+    Negative values are rounded to 0
+
+    :param data: a 2D data array with inflammation data
+                 (rows are patients, columns are days)
+
+    :returns: an array with normalised value
     """
     if np.any(data < 0):
         raise ValueError('Inflammation values should not be negative')
@@ -86,6 +91,11 @@ def patient_normalise(data: ndarray) -> ndarray:
 
 
 class Observation:
+    """An object that holds basic information about patient
+
+    :param day: day of measurement for a patient
+    :param value: value of measurement for a patient
+    """
     def __init__(self, day: int, value: int) -> None:
         self.day = day
         self.value = value
@@ -94,7 +104,10 @@ class Observation:
         return str(self.value)
 
 class Person:
-    """A general-purpose parent class for any objects representing people"""
+    """A general-purpose parent class for any objects representing people
+
+    :param name: a name of the person
+    """
     def __init__(self, name) -> None:
         self.name = name
 
@@ -102,14 +115,25 @@ class Person:
         return self.name
 
 class Patient(Person):
-    """A patient in an inflammation study."""
+    """A patient in an inflammation study.
+
+    :param name: name of the patient
+                 (parameter inherited from class Person)
+    :param observation: list of observation points for a given patient
+    """
     def __init__(self, name: str, observations: Observation = None) -> None:
         super().__init__(name)
         self.observations = []
         if observations is not None:
             self.observations = observations
 
+ 
     def add_observation(self, value: int, day: int = None) -> Observation:
+        """Add observation for a given patient
+
+        :param value: value of measurement of a patient
+        :param day: day of measurement of a patient
+        """
         if day is None:
             try:
                 day = self.observations[-1].day + 1
@@ -123,7 +147,14 @@ class Patient(Person):
         return new_observation
 
 class Doctor(Person):
-    """A doctor in a clinical trial"""
+    """A doctor in a clinical trial
+
+    :param name: name of the patient
+                 (parameter inherited from class Person)
+    :param patients: list of object of the class Patient
+                     that are assigned to a given doctor
+    :param trials: list of trials that are assigned to a given doctor
+    """
     def __init__(self, name: str) -> None:
         super().__init__(name)
         self.patients = []
@@ -133,7 +164,16 @@ class Doctor(Person):
         return self.name
 
     def add_patient(self, patient: Patient) -> None:
+        """Add patient object to a list of patients assigned to a given doctor
+
+        :param patient: object of class Patient
+        """
         self.patients.append(patient)
 
     def assign_to_trial(self, trial_name: str) -> None:
+        """Assign a given doctor to a trial
+
+        :param trial_name: string with trial name that will be
+                           added to trial list assigned to a given doctor
+        """
         self.trials.append(trial_name)
